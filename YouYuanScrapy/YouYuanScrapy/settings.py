@@ -27,7 +27,7 @@ SCHEDULER_QUEUE_CLASS ='scrapy_redis.queue.PriorityQueue'
 #True不清除Redis队列、这样可以暂停/暂停后恢复;False不管有没关闭Redis,Redis数据也会被清空
 SCHEDULER_PERSIST = True
 # redis数据库有密码情况
-REDIS_HOST = '192.168.11.40'
+REDIS_HOST = 'xxxxxx'
 REDIS_PORT = 6379
 # 或
 # REDIS_URL = "redis://127.0.0.1:6379"
