@@ -29,11 +29,12 @@ SCHEDULER_PERSIST = True
 # redis数据库有密码情况
 REDIS_HOST = 'xxxxxx'
 REDIS_PORT = 6379
-# 或
-# REDIS_URL = "redis://127.0.0.1:6379"
+# 此处密码不能配下面的REDIS_URL使用
 # REDIS_PARAMS = {
 #     'password': '123456',
 # }
+# 或
+# REDIS_URL = "redis://127.0.0.1:6379"
 #默认情况下,RFPDupeFilter只记录第一个重复请求。将DUPEFILTER_DEBUG设置为True会记录所有重复的请求。
 # DUPEFILTER_DEBUG =True
 
