@@ -5,3 +5,5 @@
 3、scrapy、scrapy-redis install
 
 4、spiders修改，settings配置
+
+5、scrapy runspider 爬虫文件(运行)
