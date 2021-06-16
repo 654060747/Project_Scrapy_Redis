@@ -122,6 +122,8 @@ ITEM_PIPELINES = {
 	# 'YouYuanScrapy.pipelines.YouyuanscrapyPipeline': 400,
 	'scrapy_redis.pipelines.RedisPipeline': 300,
 	'YouYuanScrapy.pipelines.ImagespiderPipeline':301
+	# 'YouYuanScrapy.pipelines.MongoPipeline':303
+	# 'YouYuanScrapy.pipelines.MysqlPipeline':302
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
