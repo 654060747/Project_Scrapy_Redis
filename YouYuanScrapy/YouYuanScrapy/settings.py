@@ -1,3 +1,4 @@
+# import os
 # Scrapy settings for YouYuanScrapy project
 #
 # For simplicity, this file contains only settings considered important or
@@ -27,14 +28,13 @@ SCHEDULER_QUEUE_CLASS ='scrapy_redis.queue.PriorityQueue'
 #True不清除Redis队列、这样可以暂停/暂停后恢复;False不管有没关闭Redis,Redis数据也会被清空
 SCHEDULER_PERSIST = True
 # redis数据库有密码情况
-REDIS_HOST = 'xxxxxx'
+REDIS_HOST = '192.168.xx.xx'
 REDIS_PORT = 6379
-# 此处密码不能配下面的REDIS_URL使用
-# REDIS_PARAMS = {
-#     'password': '123456',
-# }
+REDIS_PARAMS = {
+    'password': 'ubuntu',
+}
 # 或
-# REDIS_URL = "redis://127.0.0.1:6379"
+# REDIS_URL = "redis://192.168.xx.xx:6379"
 #默认情况下,RFPDupeFilter只记录第一个重复请求。将DUPEFILTER_DEBUG设置为True会记录所有重复的请求。
 # DUPEFILTER_DEBUG =True
 
@@ -80,9 +80,9 @@ DOWNLOAD_DELAY = 0.5
 
 # Disable cookies (enabled by default)
 # 使用settings里面的cookie
-#COOKIES_ENABLED = False
+# COOKIES_ENABLED = False
 # 把settings的cookie关掉，使用自定义cookie
-#COOKIES_ENABLED = Ture
+COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -102,11 +102,11 @@ DOWNLOAD_DELAY = 0.5
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 # 开启代理、伪装浏览器中间件
-# DOWNLOADER_MIDDLEWARES = {
+DOWNLOADER_MIDDLEWARES = {
 #    'YouYuanScrapy.middlewares.YouyuanscrapyDownloaderMiddleware': 543,
-	# 'YouYuanScrapy.middlewares.UserAgentMiddleware': 544,
-	# 'YouYuanScrapy.middlewares.ProxyMiddleware': 545,
-# }
+	'YouYuanScrapy.middlewares.UserAgentMiddleware': 544,
+# 	 'YouYuanScrapy.middlewares.ProxyMiddleware': 545,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -119,8 +119,9 @@ DOWNLOAD_DELAY = 0.5
 
 # 通过配置RedisPipeline将item写入key为 spider.name:items的redis的list中，供后面的分布式处理item
 ITEM_PIPELINES = {
-#    'YouYuanScrapy.pipelines.YouyuanscrapyPipeline': 300,
-	'scrapy_redis.pipelines.RedisPipeline': 400,
+	# 'YouYuanScrapy.pipelines.YouyuanscrapyPipeline': 400,
+	'scrapy_redis.pipelines.RedisPipeline': 300,
+	'YouYuanScrapy.pipelines.ImagespiderPipeline':301
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -145,7 +146,13 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # LOG等级
-LOG_LEVEL = 'DEBUG'
+# LOG_LEVEL = 'DEBUG'
 
 # 增加显示文件为中文　scrapy crawl baidu -o test.json
-FEED_EXPORT_ENCODING = 'utf-8'
+# FEED_EXPORT_ENCODING = 'utf-8'
+
+# 配置图片的下载路径（相对路径与绝对路径配置）
+# (根目录获取方法)
+# IMAGES_STORE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images')
+# (当前目录)
+IMAGES_STORE = './images'

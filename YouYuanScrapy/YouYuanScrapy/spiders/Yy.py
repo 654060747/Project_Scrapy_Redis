@@ -1,4 +1,5 @@
 import scrapy
+from scrapy import cmdline
 from scrapy.linkextractors import LinkExtractor
 # from scrapy.spiders import CrawlSpider, Rule
 from scrapy.spiders import Rule
@@ -8,6 +9,7 @@ import re
 
 
 class YySpider(RedisCrawlSpider):
+    ''' 配置scrapy-redis爬虫 '''
     name = 'Yy'
     # 静态限制域名
     allowed_domains = ['m.yoyuan.com.cn']
@@ -23,6 +25,7 @@ class YySpider(RedisCrawlSpider):
 
     rules = (
         # Ajax加载的没有翻页页面可使用抓包或查看JS、json等
+        # LinkExtractor匹配提取链接，follow匹配的链接是否继续跟踪匹配
         Rule(LinkExtractor(allow=r'/mm18-0/advance-0-0-0-0-0-0-0/p\d+/'), follow=True),
         Rule(LinkExtractor(allow=r'/\d+-profile/'), callback='parse_item', follow=False),
     )
@@ -61,12 +64,16 @@ class YySpider(RedisCrawlSpider):
         item['marriage'] = response.xpath('/html/body/div[4]/ul/li[2]/div/ol[2]/li[1]/span/text()').extract()[0].strip() 
         # # 图片链接
         img_data = response.xpath('//*[@id="photo"]/div/ul/li/a/img/@src').extract()
+        # 做成list供图片下载使用
+        # pipeline下载图片一定要传list
+        list_ = []
         st = ""
         if len(img_data) == 0:
             item['img_url'] = ""
         else:
             for one_img in img_data:
-                st = st + one_img + ","
-            item['img_url'] = st
-
+            #     st = st + one_img + ","
+            # item['img_url'] = st
+                list_.append(one_img)
+            item['img_url'] = list_
         yield item

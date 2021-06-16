@@ -1,14 +1,12 @@
 import scrapy,json
 from scrapy_redis.spiders import RedisSpider
 
-#如果想要爬虫在一开始的时候就发送post请求,那么就需要在爬虫类中重写start_requests(self)方法,
-#并且不再调用start_urls里面的url,如果不重写start_requests(self)那么爬虫会自动获取start_urls里面的url
 
 class PostSpider(RedisSpider):
+    ''' scrapy-redis post请求 '''
     name = 'redis_post'
-    allowed_domains = ['192.168.40.88:5000']
-    # 重写start_requests方法默认不调用
-    # start_urls = ['http://192.168.40.88:5000/test1']
+    allowed_domains = ['192.168.xx.xx:5000']
+    # start_urls = ['http://192.168.xx.xx:5000/test1']
     redis_key = 'post:start_urls'
 
     # 方法重写，也可以在此方法中获取动态cookie等
